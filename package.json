@@ -16,7 +16,7 @@
     "test:watch": "vitest",
     "test:integration": "bash test-endpoints.sh",
     "test:concurrency": "bash test-concurrency-manual.sh",
-    "test:all": "npm run test:unit && npm run test:integration && npm run test:concurrency",
+    "test:all": "bash run-all-tests.sh",
     "start:test-server": "tsx test-manual.ts"
   },
   "keywords": [],
