@@ -10,12 +10,12 @@ flowchart TD
     D --> E[Update Token Count<br/>min capacity, tokens + added]
     E --> F{Is tokens >= 1?}
 
-    F -->|✅ Yes| G[Consume 1 Token<br/>tokens = tokens - 1]
+    F -->| Yes| G[Consume 1 Token<br/>tokens = tokens - 1]
     G --> H[Update lastRefillTime = now]
     H --> I[Return Allowed<br/>remaining tokens<br/>time to next token]
     I --> J[200 OK Response]
 
-    F -->|❌ No| K[Calculate Wait Time<br/>1 - tokens / refillRate]
+    F -->| No| K[Calculate Wait Time<br/>1 - tokens / refillRate]
     K --> L[Return Rejected<br/>remaining: 0<br/>Retry-After: waitTime]
     L --> M[429 Response]
 ```
@@ -27,18 +27,18 @@ flowchart TD
     A[Fixed Window Request] --> B[Read Window State<br/>counter, windowStartTime]
     B --> C{Has Window Expired?<br/>now - windowStart >= windowMs}
 
-    C -->|✅ Yes| D[Reset Counter = 0<br/>windowStart = now]
+    C -->| Yes| D[Reset Counter = 0<br/>windowStart = now]
     D --> E[Increment Counter<br/>counter = 1]
 
-    C -->|❌ No| F[Increment Counter<br/>counter = counter + 1]
+    C -->| No| F[Increment Counter<br/>counter = counter + 1]
 
     E --> G{Is counter <= limit?}
     F --> G
 
-    G -->|✅ Yes| H[Return Allowed<br/>remaining = limit - counter<br/>resetTime = windowStart + windowMs]
+    G -->| Yes| H[Return Allowed<br/>remaining = limit - counter<br/>resetTime = windowStart + windowMs]
     H --> I[200 OK Response]
 
-    G -->|❌ No| J[Return Rejected<br/>remaining: 0<br/>Retry-After: time until window reset]
+    G -->| No| J[Return Rejected<br/>remaining: 0<br/>Retry-After: time until window reset]
     J --> K[429 Response]
 ```
 
@@ -53,7 +53,7 @@ flowchart LR
     end
 
     subgraph LoadBalancer
-        LB[🔄 Load Balancer]
+        LB[ Load Balancer]
     end
 
     subgraph Instance1
@@ -174,6 +174,6 @@ flowchart LR
     F --> H[Assert: successful <= LIMIT]
     G --> I[Assert: rejected = TOTAL - LIMIT]
 
-    H --> J[✅ Test Passes:<br/>No Over-Admission]
+    H --> J[ Test Passes:<br/>No Over-Admission]
     I --> J
 ```
